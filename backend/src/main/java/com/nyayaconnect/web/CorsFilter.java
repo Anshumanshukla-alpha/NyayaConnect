@@ -15,8 +15,9 @@ import java.util.Set;
 
 public class CorsFilter implements Filter {
 
-    private static final String ALLOWED_ORIGIN =
-            "https://nyaya-connect-iota.vercel.app";
+   
+private static final String ALLOWED_ORIGIN =
+        "https://nyaya-connect-iota.vercel.app";
 
     private static final Set<String> ALLOWED_METHODS =
             Set.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
