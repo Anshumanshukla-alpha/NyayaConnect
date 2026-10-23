@@ -1,0 +1,8 @@
+{
+  "name": "NyayaConnect - Legal Consultation & Case Management",
+  "version": "5.2.1",
+  "description": "Secure digital legal consultation and case management for clients and advocates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

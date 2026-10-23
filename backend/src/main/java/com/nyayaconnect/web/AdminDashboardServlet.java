@@ -1,0 +1,3 @@
+package com.nyayaconnect.web;
+import com.nyayaconnect.security.*;import com.nyayaconnect.common.*;import jakarta.servlet.*;import jakarta.servlet.http.*;import java.io.IOException;
+public class AdminDashboardServlet extends HttpServlet {protected void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException{HttpSession s=req.getSession(false);SessionUser u=s==null?null:(SessionUser)s.getAttribute(AuthenticationFilter.SESSION_KEY);if(!AuthorizationFilter.role(u,com.nyayaconnect.user.UserRole.ADMIN)){Api.error(res,403,"FORBIDDEN","Admin role required.");return;}req.setAttribute("admin",u);req.getRequestDispatcher("/WEB-INF/views/admin-dashboard.jsp").forward(req,res);}}

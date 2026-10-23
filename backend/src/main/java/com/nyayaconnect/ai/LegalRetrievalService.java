@@ -1,0 +1,5 @@
+package com.nyayaconnect.ai;
+import org.springframework.jdbc.core.JdbcTemplate;import org.springframework.stereotype.Service;import java.util.*;
+@Service public class LegalRetrievalService {public record SourceChunk(String title,String publisher,String url,String excerpt,String sourceVersion){ }private final JdbcTemplate db;public LegalRetrievalService(JdbcTemplate db){this.db=db;}
+ public List<SourceChunk> retrieve(String query,int limit){if(query==null||query.isBlank())return List.of();String q=query.replaceAll("[^A-Za-z0-9 ]"," ").trim();if(q.isBlank())return List.of();String sql="select s.title,s.publisher,s.url,c.chunk_text,s.source_version from legal_source_chunks c join legal_sources s on s.id=c.source_id where s.is_active=true and s.verified_at is not null and match(c.chunk_text,c.keywords) against (? in natural language mode) limit ?";try{return db.query(sql,(rs,n)->new SourceChunk(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)),q,Math.min(Math.max(limit,1),8));}catch(Exception ignored){return List.of();}}
+}

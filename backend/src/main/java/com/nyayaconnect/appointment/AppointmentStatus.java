@@ -1,0 +1,2 @@
+package com.nyayaconnect.appointment;
+public enum AppointmentStatus { REQUESTED,PENDING,CONFIRMED,COMPLETED,REJECTED,CANCELLED,REFUND_PENDING,REFUNDED,NO_SHOW,DISPUTED }

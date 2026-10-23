@@ -1,0 +1,2 @@
+package com.nyayaconnect.health; import com.nyayaconnect.common.Api; import jakarta.servlet.http.*; import java.io.IOException; import java.time.Instant; import java.util.Map;
+public class HealthServlet extends HttpServlet{protected void doGet(HttpServletRequest r,HttpServletResponse s)throws IOException{Api.json(s,200,Map.of("status","UP","service","nyayaconnect-backend","timestamp",Instant.now()));}}

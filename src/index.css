@@ -1,0 +1,57 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  }
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom scrollbars for data tables and code blocks */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+html { scroll-behavior: smooth; }
+body { min-width: 320px; }
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline: 3px solid rgb(245 158 11 / .55); outline-offset: 2px; }
+
+/* NyayaConnect product surface: restrained legal-tech visual language. */
+:root {
+  --ny-navy: #172033;
+  --ny-gold: #9a6a18;
+  --ny-paper: #fbfaf7;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: #f7f8fa;
+}
+
+.nyaya-client-home h1,
+.nyaya-client-home h2,
+.nyaya-client-home h3,
+.font-serif {
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+
+.nyaya-client-home button,
+.nyaya-client-home a {
+  -webkit-tap-highlight-color: transparent;
+}

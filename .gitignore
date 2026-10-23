@@ -1,0 +1,27 @@
+﻿node_modules/
+dist/
+build/
+coverage/
+*.log
+.env*
+!.env.example
+!.env.*.example
+!.env.*.template
+!.env.*.sample
+
+# Java / Maven build output
+target/
+*.class
+
+# Local IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local development databases and private keys
+*.sqlite
+*.sqlite3
+*.db
+*.pem
+*.key

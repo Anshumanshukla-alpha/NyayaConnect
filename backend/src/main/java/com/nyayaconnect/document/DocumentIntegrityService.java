@@ -1,0 +1,5 @@
+package com.nyayaconnect.document;
+import org.springframework.stereotype.Service;import java.io.*;import java.nio.file.*;import java.security.*;
+@Service public class DocumentIntegrityService {public String sha256(InputStream in)throws IOException{try{MessageDigest d=MessageDigest.getInstance("SHA-256");byte[] b=new byte[8192];int n;while((n=in.read(b))!=-1)d.update(b,0,n);StringBuilder s=new StringBuilder(64);for(byte x:d.digest())s.append(String.format("%02x",x));return s.toString();}catch(NoSuchAlgorithmException e){throw new IllegalStateException(e);}}
+ public Path privateStorageRoot(){String p=System.getenv().getOrDefault("DOCUMENT_STORAGE_ROOT","./private-data/documents");Path root=Paths.get(p).toAbsolutePath().normalize();try{Files.createDirectories(root);return root;}catch(IOException e){throw new IllegalStateException("Cannot initialize private document storage",e);}}
+ public Path safePath(String storageKey){Path root=privateStorageRoot();Path target=root.resolve(storageKey).normalize();if(!target.startsWith(root))throw new SecurityException("Invalid storage key.");return target;}}

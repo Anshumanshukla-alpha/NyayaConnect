@@ -1,0 +1,10 @@
+# Database
+DB_URL=jdbc:mysql://localhost:3306/nyayaconnect?useSSL=true&serverTimezone=UTC
+DB_USER=nyaya_app
+DB_PASSWORD=CHANGE_ME
+DB_POOL_MAX=15
+# Runtime
+JAVA_OPTS=-Xms256m -Xmx1024m
+# Optional AI provider; leave disabled until privacy/retention review is complete
+AI_PROVIDER=disabled
+GEMINI_API_KEY=

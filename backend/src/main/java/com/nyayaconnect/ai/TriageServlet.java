@@ -1,0 +1,6 @@
+package com.nyayaconnect.ai;
+import com.nyayaconnect.common.*;import jakarta.servlet.http.*;import java.io.IOException;import java.util.Map;
+public class TriageServlet extends HttpServlet{private LegalRetrievalService retrieval;public void init(){retrieval=com.nyayaconnect.auth.SpringAccess.bean(getServletContext(),LegalRetrievalService.class);}protected void doPost(HttpServletRequest req,HttpServletResponse res)throws IOException{try{Map<?,?> b=Json.MAPPER.readValue(req.getInputStream(),Map.class);String q=get(b,"query");LegalTriage base=TriageClassifier.classify(q);var chunks=retrieval.retrieve(q,5);var citations=CitationValidator.toCitations(chunks);Api.json(res,200,new LegalTriage(base.category(),base.practiceArea(),base.urgency(),base.confidenceLevel(),base.summary(),base.relevantActs(),base.requiredDocuments(),base.legalRightsSummary(),base.nextSteps(),base.suggestedSpecializations(),citations,!citations.isEmpty()));}catch(IllegalArgumentException e){Api.error(res,400,"VALIDATION_ERROR",e.getMessage());}catch(Exception e){Api.error(res,500,"TRIAGE_FAILED","Unable to process triage safely.");}}
+ private static String get(Map<?,?> m,String k){return get(m,k,"");}
+ private static String get(Map<?,?> m,String k,String d){Object v=m.get(k);return v==null?d:String.valueOf(v);}
+}

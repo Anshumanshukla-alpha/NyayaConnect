@@ -1,0 +1,39 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: nyayaconnect
+      MYSQL_USER: nyaya_app
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change-me-root}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./src/main/resources/seed-demo.sql:/docker-entrypoint-initdb.d/02-seed-demo.sql:ro
+      - ./src/main/resources/seed-legal-sources.sql:/docker-entrypoint-initdb.d/03-seed-legal-sources.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p\"$${MYSQL_ROOT_PASSWORD}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      APP_ENV: local
+      DB_URL: ${DB_URL:-jdbc:mysql://mysql:3306/nyayaconnect?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC}
+      DB_USER: ${DB_USER:-nyaya_app}
+      DB_PASSWORD: ${DB_PASSWORD:-change-me}
+      DB_POOL_MAX: 15
+      DOCUMENT_STORAGE_ROOT: /var/lib/nyayaconnect/private-data/documents
+      DOCUMENT_TMP_DIR: /var/lib/nyayaconnect/tmp
+    volumes:
+      - document_data:/var/lib/nyayaconnect/private-data
+      - document_tmp:/var/lib/nyayaconnect/tmp
+    ports: ["8080:8080"]
+volumes:
+  document_data:
+  document_tmp:
+  mysql_data:
